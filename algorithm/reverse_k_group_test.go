@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+//TODO 目前水平不够
+
 //输入：head = [1,2,3,4,5], k = 2
 //输出：[2,1,4,3,5]
 func TestReverseKGroup(t *testing.T) {
