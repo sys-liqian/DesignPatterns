@@ -1,4 +1,4 @@
-package algorithm
+package a1
 
 import (
 	"fmt"

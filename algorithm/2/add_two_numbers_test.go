@@ -1,4 +1,4 @@
-package algorithm
+package a2
 
 import "testing"
 

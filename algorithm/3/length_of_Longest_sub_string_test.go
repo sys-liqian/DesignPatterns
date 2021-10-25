@@ -1,4 +1,4 @@
-package algorithm
+package a3
 
 import (
 	"fmt"
@@ -44,4 +44,9 @@ func lengthOfLongestSubstring(s string) int {
 	}
 
 	return max
+}
+
+func lengthOfLongestSubstring1(s string) int {
+
+	return 0
 }
