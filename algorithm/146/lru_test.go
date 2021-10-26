@@ -11,6 +11,17 @@ import (
 //当缓存容量达到上限时，它应该在写入新数据之前删除最久未使用的数据值，从而为新的数据值留出空间。
 
 func TestLru(t *testing.T) {
+	lruCache := Constructor(2)
+
+	lruCache.Put(2, 1)
+
+	lruCache.Put(2, 2)
+	lruCache.Get(2)
+
+	lruCache.Put(1, 1)
+	lruCache.Put(4, 1)
+
+	lruCache.Get(2)
 
 }
 
@@ -22,37 +33,55 @@ func TestLru(t *testing.T) {
  */
 
 type LRUCache struct {
-	M   map[int]int
-	Cap int
-	L   *list.List
+	M map[int]*list.Element
+	C int
+	L *list.List
+}
+
+type Node struct {
+	Key, Value int
 }
 
 func Constructor(capacity int) LRUCache {
 	return LRUCache{
-		M:   make(map[int]int, capacity),
-		Cap: capacity,
-		L:   list.New(),
+		M: make(map[int]*list.Element, capacity),
+		C: capacity,
+		L: list.New(),
 	}
 }
 
 func (c *LRUCache) Get(key int) int {
-	value := c.M[key]
-	if value >= 0 {
+	v := c.M[key]
+	if v != nil {
+		node := v.Value.(Node)
 		//让被访问的元素放在链表头部
-		c.L.PushFront(key)
-		return value
+		c.L.MoveToFront(v)
+		return node.Value
 	}
 	return -1
 }
 
 func (c *LRUCache) Put(key int, value int) {
+	node := Node{key, value}
+	//判断元素是否存在
+	if v, ok := c.M[key]; ok {
+		v.Value = node
+		c.L.MoveToFront(v)
+		return
+	}
 	mapSize := len(c.M)
-	//put时判断LRU当前的容量
-	if mapSize >= c.Cap {
-		//移除最近不使用的元素
 
+	//put时判断LRU当前的容量
+	if mapSize >= c.C {
+		//链表移除最近不使用的元素
+		backElement := c.L.Back()
+		delKey := backElement.Value.(Node).Key
+		//双向列表中删除
+		c.L.Remove(backElement)
+		//map中删除该key,value
+		delete(c.M, delKey)
 	}
 	//插入元素
-	c.M[key] = value
-
+	el := c.L.PushFront(node)
+	c.M[key] = el
 }
