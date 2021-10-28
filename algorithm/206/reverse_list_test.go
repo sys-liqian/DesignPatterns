@@ -1,4 +1,4 @@
-package algorithm_test
+package a206
 
 import (
 	"testing"
