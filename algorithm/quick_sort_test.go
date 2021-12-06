@@ -6,7 +6,7 @@ import (
 )
 
 func TestSort(t *testing.T) {
-	arr := []int{9, 4, 7, 58, 254, 7, 3, 25, 1}
+	arr := []int{5, 3, 9, 4, 10}
 	QuickSort(&arr)
 	fmt.Println(arr)
 }
@@ -33,7 +33,6 @@ func partition(arr *[]int, start, end int) int {
 			for left < right && (*arr)[right] > pivot {
 				right--
 			}
-			//TODO <不好使 <=可以
 			for left < right && (*arr)[left] <= pivot {
 				left++
 			}
