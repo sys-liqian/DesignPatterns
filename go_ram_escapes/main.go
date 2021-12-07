@@ -55,6 +55,32 @@ func LessThan8192() {
 	}
 }
 
+/**
+内存逃逸情况4：切片或者map中存储指针值
+*/
+func sliceSavePointer() {
+	c := make([]*string, 0)
+	t1 := "test1"
+	c = append(c, &t1)
+	m := make(map[*string]*string)
+	t2 := "test2"
+	m[&t1] = &t2
+}
+
+/**
+内存逃逸情况5：切片或者map中存储指针值
+*/
+func chanSendPointer() {
+	ch := make(chan *string)
+	chSendStr := "chSendStr"
+	ch <- &chSendStr
+}
+
+/*
+内存逃逸情况6：闭包
+函数也是一个指针类型，匿名函数作为返回值时也发生了逃逸
+匿名函数中的外部变量n会逃逸到堆上
+*/
 func Increase() func() int {
 	n := 0
 	return func() int {
