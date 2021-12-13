@@ -11,6 +11,8 @@ func TestSort(t *testing.T) {
 	fmt.Println(arr)
 }
 
+//--------------------------分割线--------------------------------
+
 func QuickSort(arr *[]int) {
 	quickSort(arr, 0, len(*arr)-1)
 }
@@ -46,6 +48,8 @@ func partition(arr *[]int, start, end int) int {
 	return 0
 }
 
+//--------------------------分割线--------------------------------
+
 //自己写的冒泡排序
 func BubbleSort(src []int) []int {
 	l := len(src)
@@ -71,3 +75,5 @@ func BubbleSortS(src []int) []int {
 	}
 	return src
 }
+
+//--------------------------分割线--------------------------------
