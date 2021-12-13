@@ -1,6 +1,7 @@
 package algorithm
 
 import (
+	"container/list"
 	"fmt"
 	"testing"
 )
@@ -40,9 +41,10 @@ func TestTraverse(t *testing.T) {
 			},
 		},
 	}
-	PreOrder(&node)
-	fmt.Println()
-	InfixOrder(&node)
+	//PreOrder(&node)
+	//fmt.Println()
+	PreOrder1(&node)
+	//InfixOrder(&node)
 	fmt.Println()
 }
 
@@ -53,6 +55,32 @@ func PreOrder(node *Node) {
 		fmt.Printf("%s,", node.V)
 		PreOrder(node.L)
 		PreOrder(node.R)
+	}
+}
+
+/*
+ 输出A ,A入栈
+ 输出B ,B入栈
+ 输出C ,C入栈, C左孩子为空,所以 node=node.L node=nil,进入第二个判断
+ 取栈顶元素为C,node = node.R ,然后C出栈
+ 输出D ,D入栈, D左孩子为空, node = nil,进入第二个判断
+ 取栈顶元素为D,node = node.R ,D出栈, node=nil, B出栈,node=nil,A出栈 node= E
+
+*/
+func PreOrder1(node *Node) {
+	stack := list.New()
+	for node != nil || stack.Len() != 0 {
+		if node != nil {
+			fmt.Printf("%s", node.V)
+			stack.PushFront(node)
+			node = node.L
+		}
+		if node == nil && stack.Len() != 0 {
+			back := stack.Front()
+			n := (back.Value).(*Node)
+			node = n.R
+			stack.Remove(back)
+		}
 	}
 }
 
