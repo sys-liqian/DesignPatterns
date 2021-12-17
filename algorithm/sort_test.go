@@ -6,9 +6,26 @@ import (
 )
 
 func TestSort(t *testing.T) {
-	arr := []int{5, 3, 9, 4, 10}
-	QuickSort(&arr)
+	arr := []int{5, 11, 9, 4, 10}
+	//QuickSort(&arr)
+	arr = InsertionSort(arr)
 	fmt.Println(arr)
+}
+
+//--------------------------分割线--------------------------------
+//直接插入排序
+
+func InsertionSort(arr []int) []int {
+	for i := range arr {
+		pre := i - 1
+		v := arr[i]
+		for pre >= 0 && arr[pre] > v {
+			arr[pre+1] = arr[pre]
+			pre -= 1
+		}
+		arr[pre+1] = v
+	}
+	return arr
 }
 
 //--------------------------分割线--------------------------------
